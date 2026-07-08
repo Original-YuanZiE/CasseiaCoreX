@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CasseiaCoreX (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CasseiaCoreX (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
