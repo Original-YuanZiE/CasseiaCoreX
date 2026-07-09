@@ -14,10 +14,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\Home.xaml" />
-    <None Remove="Pages\Personalization.xaml" />
-    <None Remove="Pages\SysSettings.xaml" />
-    <None Remove="Pages\Tools.xaml" />
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+    <Page Remove="View\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Pages\Home.xaml" />
+    <None Remove="Views\Pages\Personalization.xaml" />
+    <None Remove="Views\Pages\SysSettings.xaml" />
+    <None Remove="Views\Pages\Tools.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,26 +52,6 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Tools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\SysSettings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Personalization.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Pages\Home.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -83,6 +69,9 @@
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <WindowsPackageType>None</WindowsPackageType>
-    <PublishAot>True</PublishAot>
+    <PublishAot>False</PublishAot>
   </PropertyGroup>
+  <ItemGroup>
+    <PRIResource Remove="View\**" />
+  </ItemGroup>
 </Project>

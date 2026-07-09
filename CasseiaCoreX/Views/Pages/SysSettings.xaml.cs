@@ -1,3 +1,4 @@
+using CasseiaCoreX.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,9 +24,13 @@ namespace CasseiaCoreX.Pages
     /// </summary>
     public sealed partial class SysSettings : Page
     {
+        public SysSettingsViewModel ViewModel { get;}
         public SysSettings()
         {
+            // 初始化页面与 ViewModel
+            ViewModel = new SysSettingsViewModel();
             InitializeComponent();
+            DataContext = ViewModel;
         }
     }
 }

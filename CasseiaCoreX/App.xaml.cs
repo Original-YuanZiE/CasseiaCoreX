@@ -58,6 +58,12 @@ namespace CasseiaCoreX
 
         }
 
+        public static string AppVersion
+        {
+            // App 版本
+            get => "Win0.1.0_2607109A_Beta";
+        }
+
         public static async Task<ContentDialogResult> ShowDialog(XamlRoot xamlRoot, string title, Object content, string primary, string secondary, string cancel, ContentDialogButton def)
         {
             // 弹出简单弹窗

@@ -71,6 +71,9 @@ namespace CasseiaCoreX
                 TitleText.Text = $"[Administrator] {TitleText.Text}";
             }
 
+            // 加载主页
+            MainNavView.SelectedItem = NavigateHome;
+            FrameNavigation("NavigateHome");
         }
 
         public void MaxWindow()
