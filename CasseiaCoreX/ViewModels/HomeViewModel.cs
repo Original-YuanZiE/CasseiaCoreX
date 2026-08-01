@@ -1,4 +1,5 @@
 ﻿using CasseiaCoreX.Model;
+using CasseiaCoreX.Pages;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace CasseiaCoreX.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-
+        // 桌面壁纸
         private BitmapImage _wallpaper;
         public BitmapImage Wallpaper
         {
@@ -21,7 +22,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _wallpaper, value);
         }
 
-
+        // CPU
         private string _cpuName = "null";
         public string CPUName
         {
@@ -29,7 +30,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _cpuName, value);
         }
 
-
+        // 内存
         private string _ramInfo = "null";
         public string RAMInfo
         {
@@ -37,7 +38,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _ramInfo, value);
         }
 
-
+        // 显卡
         private string _gpuName = "null";
         public string GPUName
         {
@@ -45,7 +46,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _gpuName, value);
         }
 
-
+        // 显卡列表
         private string _gpuList = string.Empty;
         public string GPUList
         {
@@ -53,7 +54,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _gpuList, value);
         }
 
-
+        // Windows 版本
         private string _windowsBrandName = "Windows 版本";
         public string WindowsBrandName
         {
@@ -61,7 +62,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _windowsBrandName, value);
         }
 
-
+        // Windows 版本号
         private string _windowsVersion = "null";
         public string WindowsVersion
         {
@@ -69,7 +70,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _windowsVersion, value);
         }
 
-
+        // CasseiaCore 版本
         private string _libVersion = "null";
         public string LibVersion
         {
@@ -77,7 +78,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _libVersion, value);
         }
 
-
+        // 主板
         private string _baseBoardInfo = "null";
         public string BaseBoardInfo
         {
@@ -85,7 +86,7 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _baseBoardInfo, value);
         }
 
-
+        // 显示信息
         private string _displayInfoText = "null";
         public string DisplayInfoText
         {
@@ -93,9 +94,18 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _displayInfoText, value);
         }
 
+        // CasseiaOS 版本
+        private string _casseiaOSVer;
+        public string CasseiaOSVer
+        {
+            get => _casseiaOSVer;
+            set => Set(ref _casseiaOSVer, value);
+        }
+
 
         public ICommand ShowGpuListCommand { get; }
         public event EventHandler RequestShowGpuList;
+
 
         public HomeViewModel()
         {
@@ -123,11 +133,30 @@ namespace CasseiaCoreX.ViewModels
             WindowsVersion = DeviceInfo.GetWindowsVersion();
             WindowsBrandName = DeviceInfo.GetWindowsBrandingName();
             // 库版本
-            LibVersion =$"{App.AppVersion}  |  项目维护：卡茜娅·元子喵";
+            LibVersion = $"{App.AppVersion}  |  项目维护：卡茜娅·元子喵";
             // 主板
             BaseBoardInfo = DeviceInfo.GetBIOSInfo(0);
             // 屏幕
             DisplayInfoText = FormatDisplayInfo();
+            // CasseiaOS 版本
+            string OSver = String.Empty;
+            string deviceCode = String.Empty;
+            if (DeviceInfo.GetCasseiaOSVer(out OSver, out deviceCode))
+            {
+                if (deviceCode != String.Empty)
+                {
+                    CasseiaOSVer = $"{OSver}.{deviceCode}";
+                }
+                else
+                {
+                    CasseiaOSVer = OSver;
+                }
+            }
+            else
+            {
+                CasseiaOSVer = String.Empty;
+
+            }
         }
 
         private string ResolveGpuDisplayName(string[] gpuTmp)
@@ -145,7 +174,7 @@ namespace CasseiaCoreX.ViewModels
                     else if (gpu.Contains("Iris")) { firstGPU = gpu; break; }
                     else if (gpu.Contains("UHD") || gpu.Contains("HD")) { firstGPU = gpu; break; }
                 }
-                return $"{firstGPU}，点此展开列表";
+                return $"{firstGPU}  |  点此展开列表";
             }
             return firstGPU;
         }

@@ -116,5 +116,11 @@ namespace CasseiaCoreX
                     break;
             }
         }
+
+        public void ShowAwaitOverlay(bool value)
+        {
+            // 显示或隐藏等待叠加层
+            AwaitOverlay.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }

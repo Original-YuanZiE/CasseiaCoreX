@@ -35,6 +35,10 @@ namespace CasseiaCoreX.Pages
             this.Loaded += (s, e) =>
             {
                 ViewModel.LoadInfo();
+                if (ViewModel.CasseiaOSVer == String.Empty)
+                {
+                    CasseiaOSVerShow.Visibility = Visibility.Collapsed;
+                }
             };
 
 
@@ -84,16 +88,14 @@ namespace CasseiaCoreX.Pages
         private async void OnRequestShowGpuList(object sender, System.EventArgs e)
         {
             // 弹出显卡列表
-            var dialog = new ContentDialog
-            {
-                XamlRoot = this.XamlRoot,
-                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                Title = "GPU 列表",
-                PrimaryButtonText = "好",
-                DefaultButton = ContentDialogButton.Primary,
-                Content = ViewModel.GPUList
-            };
-            await dialog.ShowAsync();
+
+            await App.ShowDialog(this.XamlRoot,
+                "GPU 列表",
+                ViewModel.GPUList,
+                "好",
+                null,
+                null,
+                ContentDialogButton.Primary);
         }
     }
 }

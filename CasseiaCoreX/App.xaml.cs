@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -61,7 +62,16 @@ namespace CasseiaCoreX
         public static string AppVersion
         {
             // App 版本
-            get => "Win0.1.0_2607109A_Beta";
+            get => "0.1.1_2608101A_Beta";
+        }
+
+        public static bool IsRunningAsAdmin()
+        {
+            // App 权限
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+
         }
 
         public static async Task<ContentDialogResult> ShowDialog(XamlRoot xamlRoot, string title, Object content, string primary, string secondary, string cancel, ContentDialogButton def)
@@ -77,7 +87,9 @@ namespace CasseiaCoreX
             dialog.DefaultButton = def;
             dialog.Content = content;
 
+
             return await dialog.ShowAsync();
+
         }
     }
 }

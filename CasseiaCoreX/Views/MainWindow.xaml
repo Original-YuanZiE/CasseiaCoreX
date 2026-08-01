@@ -9,30 +9,43 @@
     mc:Ignorable="d"
     Title="CasseiaCoreX">
 
-    <Grid x:Name="MainGrid">
-        
-        <Grid.RowDefinitions>
-            <!--标题栏-->
-            <RowDefinition Height="48"/>
-            <!--客户区-->
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <Grid x:Name="MainGrid">
 
-        <!--标题区域-->
-        <Grid Grid.Row="0">
-            <TextBlock x:Name="TitleText" Text="CasseiaCoreX Beta" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0"/>
+            <Grid.RowDefinitions>
+                <!--标题栏-->
+                <RowDefinition Height="48"/>
+                <!--客户区-->
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--标题区域-->
+            <Grid Grid.Row="0">
+                <TextBlock x:Name="TitleText" Text="CasseiaCoreX Beta" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0"/>
+            </Grid>
+
+            <!--导航视图-->
+            <NavigationView x:Name="MainNavView" Grid.Row="1" IsSettingsVisible="False" ItemInvoked="MainNavView_ItemInvoked">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem x:Name="NavigateHome" Content="主页" Icon="Home"/>
+                    <NavigationViewItem x:Name="NavigateSysSettings" Content="系统设置" Icon="Setting"/>
+                    <NavigationViewItem x:Name="NavigateTools" Content="常用工具" Icon="Library"/>
+                </NavigationView.MenuItems>
+                <Frame x:Name="MainFrame"/>
+            </NavigationView>
+
         </Grid>
-
-        <!--导航视图-->
-        <NavigationView x:Name="MainNavView" Grid.Row="1" IsSettingsVisible="False" ItemInvoked="MainNavView_ItemInvoked">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="NavigateHome" Content="主页" Icon="Home"/>
-                <NavigationViewItem x:Name="NavigateSysSettings" Content="系统设置" Icon="Setting"/>
-                <NavigationViewItem x:Name="NavigateTools" Content="常用工具" Icon="Library"/>
-            </NavigationView.MenuItems>
-            <Frame x:Name="MainFrame"/>
-        </NavigationView>
         
+        <Grid x:Name="AwaitOverlay" Visibility="Collapsed">
+            <Grid.Background>
+                <AcrylicBrush TintColor="Black" TintOpacity="0.95"/>
+            </Grid.Background>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <ProgressRing IsActive="True" Width="80" Height="80" Foreground="White"/>
+                    <TextBlock Text="请等待后台操作或弹出窗口返回" Foreground="White" FontSize="20" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
-    
 </Window>
