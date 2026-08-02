@@ -121,10 +121,12 @@ namespace CasseiaCoreX
             }
         }
 
-        public void ShowAwaitOverlay(bool value)
+        public void ShowAwaitOverlay(bool value, string text = "请等待后台操作或弹出窗口返回")
         {
             // 显示或隐藏等待叠加层
             AwaitOverlay.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            if (!value) { return; }
+            AwaitText.Text = text;
         }
     }
 }

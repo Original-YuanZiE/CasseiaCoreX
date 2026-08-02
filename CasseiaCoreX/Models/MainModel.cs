@@ -1189,7 +1189,7 @@ namespace CasseiaCoreX.Model
                 }
                 catch (Exception ex)
                 {
-                    output = $"无法复制票据文件或文件不存在\n错误信息：{ex}";
+                    output = $"无法复制票据文件或文件不存在\n错误信息：{ex.Message}";
                     return false;
                     
                 }

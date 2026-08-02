@@ -135,7 +135,7 @@ namespace CasseiaCoreX.Pages
                 MainWindow.mainWindow?.ShowAwaitOverlay(false);
                 await App.ShowDialog(this.XamlRoot,
                 "执行失败，发生错误",
-                $"{ex}",
+                $"{ex.Message}",
                 "好",
                 null,
                 null,

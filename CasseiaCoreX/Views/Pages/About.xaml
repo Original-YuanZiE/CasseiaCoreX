@@ -74,7 +74,7 @@
                             </Grid.ColumnDefinitions>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE78A;"/>
                             <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock Text="检查更新（暂未开放）" FontWeight="Bold"/>
+                                <TextBlock Text="检查更新" FontWeight="Bold"/>
                                 <TextBlock Text="将使用 Github 检查更新"/>
                             </StackPanel>
                         </Grid>
