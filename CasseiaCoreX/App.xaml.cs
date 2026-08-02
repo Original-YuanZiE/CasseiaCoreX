@@ -62,7 +62,19 @@ namespace CasseiaCoreX
         public static string AppVersion
         {
             // App 版本
-            get => "0.1.1_2608101A_Beta";
+            get => "1.0.0.0_2608302A_Release";
+        }
+
+        public static string AppUpdateChannel
+        {
+            // 更新通道
+            get => "Release";
+        }
+
+        public static string AppUpdateVersion
+        {
+            // 用于 OTA 的版本号
+            get => "1.0.0.0";
         }
 
         public static bool IsRunningAsAdmin()

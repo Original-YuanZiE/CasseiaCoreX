@@ -30,6 +30,11 @@
                     <NavigationViewItem x:Name="NavigateHome" Content="主页" Icon="Home"/>
                     <NavigationViewItem x:Name="NavigateSysSettings" Content="系统设置" Icon="Setting"/>
                     <NavigationViewItem x:Name="NavigateTools" Content="常用工具" Icon="Library"/>
+                    <NavigationViewItem x:Name="NavigateAbout" Content="关于">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE783;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
                 </NavigationView.MenuItems>
                 <Frame x:Name="MainFrame"/>
             </NavigationView>

@@ -20,6 +20,7 @@
     <Page Remove="View\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\Pages\About.xaml" />
     <None Remove="Views\Pages\Home.xaml" />
     <None Remove="Views\Pages\Personalization.xaml" />
     <None Remove="Views\Pages\SysSettings.xaml" />
@@ -34,6 +35,7 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="CasseiaCoreXIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +73,7 @@
     <WindowsPackageType>None</WindowsPackageType>
     <PublishAot>False</PublishAot>
     <SignAssembly>False</SignAssembly>
+    <ApplicationIcon>CasseiaCoreXIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <PRIResource Remove="View\**" />
@@ -163,5 +166,15 @@
     <Content Update="Assets\GenuineTickets\Team.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="CasseiaCoreXIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Pages\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

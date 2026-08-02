@@ -1,4 +1,5 @@
 using CasseiaCoreX.Pages;
+using CasseiaCoreX.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -113,6 +114,9 @@ namespace CasseiaCoreX
                     break;
                 case "NavigateTools":
                     MainFrame.Navigate(typeof(Tools));
+                    break;
+                case "NavigateAbout":
+                    MainFrame.Navigate(typeof(About));
                     break;
             }
         }

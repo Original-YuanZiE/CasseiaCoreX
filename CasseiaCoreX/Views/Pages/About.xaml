@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CasseiaCoreX.Views.Pages.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CasseiaCoreX.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <Grid x:Name="RootGrid">
+
+
+            <Viewbox Margin="80" MaxWidth="480">
+                <Grid x:Name="LogoShow">
+                    <Image x:Name="LogoIMG" Height="480" Width="480" Stretch="UniformToFill"/>
+                </Grid>
+            </Viewbox>
+
+
+            <Grid Margin="40" x:Name="InfoShow">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                    <!--显示 CasseiaCore 版本-->
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA3A;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="CasseiaCore 版本" FontWeight="Bold"/>
+                                <TextBlock x:Name="CasseiaVerShow"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--显示更新通道-->
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE78A;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="当前通道" FontWeight="Bold"/>
+                                <TextBlock x:Name="UpdateChannelShow"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--显示作者-->
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80" Click="AuthorHome_Click">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="作者: 卡茜娅·元子喵" FontWeight="Bold"/>
+                                <TextBlock Text="https://github.com/Original-YuanZiE"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--检查更新-->
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80" Click="CheckUpdate_Click">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE78A;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="检查更新（暂未开放）" FontWeight="Bold"/>
+                                <TextBlock Text="将使用 Github 检查更新"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>
