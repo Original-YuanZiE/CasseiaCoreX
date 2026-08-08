@@ -24,20 +24,7 @@
             <Grid Margin="40" x:Name="InfoShow">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
-                    <!--显示 CasseiaOS 版本-->
-                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E2;"/>
-                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                                <TextBlock Text="CasseiaOS 版本" FontWeight="Bold"/>
-                                <TextBlock x:Name="CasseiaOSVerShow" Text="{x:Bind ViewModel.CasseiaOSVer, Mode=OneWay}"/>
-                            </StackPanel>
-                        </Grid>
-                    </Button>
+                    
                     <!--显示 CPU 名称-->
                     <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
                         <Grid HorizontalAlignment="Stretch">
@@ -91,6 +78,20 @@
                             <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
                                 <TextBlock x:Name="OSBrandName" Text="{x:Bind ViewModel.WindowsBrandName, Mode=OneWay}" FontWeight="Bold"/>
                                 <TextBlock x:Name="OSVersionShow" Text="{x:Bind ViewModel.WindowsVersion, Mode=OneWay}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--显示 CasseiaOS 版本-->
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80" Visibility="{x:Bind ViewModel.IsShowCasseiaOSVer, Mode=OneWay}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E2;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="CasseiaOS 版本" FontWeight="Bold"/>
+                                <TextBlock x:Name="CasseiaOSVerShow" Text="{x:Bind ViewModel.CasseiaOSVer, Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                     </Button>

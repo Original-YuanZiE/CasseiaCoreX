@@ -155,7 +155,21 @@ namespace CasseiaCoreX.ViewModels
                 }
             }
         }
-        
+
+        // 强制启用圆角与 Mica
+        private bool _forceEffectMode;
+        public bool ForceEffectMode
+        {
+            get => _forceEffectMode;
+            set
+            {
+                if(Set(ref _forceEffectMode, value))
+                {
+                    SystemSettings.ForceEffectMode = value;
+                }
+            }
+        }
+
         // 解锁平板模式任务栏
         public ICommand UnLockTabletModeCommand;
         public event EventHandler UnLockTabletModeEvent;
@@ -191,6 +205,10 @@ namespace CasseiaCoreX.ViewModels
         // 备份密钥
         public ICommand BackupKeysCommand;
         public event EventHandler BackupKeysEvent;
+
+        // 设置 OEM 信息
+        public ICommand SetOEMInfoCommand;
+        public event EventHandler SetOEMInfoEvent;
 
         public SysSettingsViewModel()
         {
@@ -238,6 +256,11 @@ namespace CasseiaCoreX.ViewModels
             {
                 BackupKeysEvent?.Invoke(this, EventArgs.Empty);
             });
+
+            SetOEMInfoCommand = new RelayCommand(() =>
+            {
+                SetOEMInfoEvent?.Invoke(this, EventArgs.Empty);
+            });
         }
 
         public void LoadInfo()
@@ -251,6 +274,7 @@ namespace CasseiaCoreX.ViewModels
             Set(ref _disableDefender, SystemSettings.SwitchDefender, nameof(DisableDefender));
             SystemSettings.WindowsUpdate WU = new SystemSettings.WindowsUpdate();
             Set(ref _maxDelayTime, WU.MaxAllowDelayDays, nameof(MaxDelayTime));
+            Set(ref _forceEffectMode, SystemSettings.ForceEffectMode, nameof(ForceEffectMode));
             WU.Close();
         }
 

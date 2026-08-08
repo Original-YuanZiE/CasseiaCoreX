@@ -59,6 +59,7 @@ namespace CasseiaCoreX.Pages
             ViewModel.HWIDEvent += HWID_Activate;
             ViewModel.Home2ProEvent += HomeToPro;
             ViewModel.BackupKeysEvent += BackupKey;
+            ViewModel.SetOEMInfoEvent += EditOEMInfo;
         }
 
         private async void CurrentPermission(object sender, RoutedEventArgs e)
@@ -418,6 +419,51 @@ namespace CasseiaCoreX.Pages
                     null,
                     ContentDialogButton.Primary);
             }
+        }
+
+        private async void EditOEMInfo(object sender, EventArgs e)
+        {
+            Model.SystemSettings.GetOEMInformation(out string manufacturer, out string model, out string supportHours, out string supportPhone, out string supportURL);
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Orientation = Orientation.Vertical;
+            stackPanel.Spacing = 10;
+            TextBox manufacturerBox = new TextBox();
+            manufacturerBox.Header = "制造商";
+            manufacturerBox.Text = manufacturer;
+            TextBox modelBox = new TextBox();
+            modelBox.Header = "型号";
+            modelBox.Text = model;
+            TextBox supportHoursBox = new TextBox();
+            supportHoursBox.Header = "支持时间";
+            supportHoursBox.Text = supportHours;
+            TextBox supportPhoneBox = new TextBox();
+            supportPhoneBox.Header = "支持电话";
+            supportPhoneBox.Text = supportPhone;
+            TextBox supportURLBox = new TextBox();
+            supportURLBox.Header = "支持网站";
+            supportURLBox.Text = supportURL;
+
+            stackPanel.Children.Add(manufacturerBox);
+            stackPanel.Children.Add(modelBox);
+            stackPanel.Children.Add(supportHoursBox);
+            stackPanel.Children.Add(supportPhoneBox);
+            stackPanel.Children.Add(supportURLBox);
+
+            var result = await App.ShowDialog(this.XamlRoot,
+                    "OEM 信息",
+                    stackPanel,
+                    "保存",
+                    "取消",
+                    null,
+                    ContentDialogButton.Primary);
+
+            if (result != ContentDialogResult.Primary)
+            {
+                return;
+            }
+
+            Model.SystemSettings.SetOEMInformation(manufacturerBox.Text, modelBox.Text, supportHoursBox.Text, supportPhoneBox.Text, supportURLBox.Text);
         }
     }
 }

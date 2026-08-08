@@ -102,6 +102,14 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _casseiaOSVer, value);
         }
 
+        // 是否显示 CasseiaOS 版本
+        private bool _isShowCasseiaOSVer;
+        public bool IsShowCasseiaOSVer
+        {
+            get => _isShowCasseiaOSVer;
+            set => Set(ref _isShowCasseiaOSVer, value);
+        }
+
 
         public ICommand ShowGpuListCommand { get; }
         public event EventHandler RequestShowGpuList;
@@ -151,11 +159,12 @@ namespace CasseiaCoreX.ViewModels
                 {
                     CasseiaOSVer = OSver;
                 }
+                IsShowCasseiaOSVer = true;
             }
             else
             {
                 CasseiaOSVer = String.Empty;
-
+                IsShowCasseiaOSVer = false;
             }
         }
 

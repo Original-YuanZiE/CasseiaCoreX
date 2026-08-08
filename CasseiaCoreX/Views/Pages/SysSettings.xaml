@@ -164,6 +164,38 @@
                         <ToggleSwitch Grid.Column="2" x:Name="DefenderSwitch" OnContent="" OffContent="" IsOn="{x:Bind ViewModel.DisableDefender, Mode=TwoWay}"/>
                     </Grid>
                 </Button>
+                <!--强制启用云母与圆角-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE727;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="强制启用云母与圆角" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="可在无 GPU 驱动时启用高级材质，此更改需要重启计算机才能生效；需要 22H2 以上系统版本" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="2" x:Name="MicaSwitch" OnContent="" OffContent="" IsOn="{x:Bind ViewModel.ForceEffectMode, Mode=TwoWay}"/>
+                    </Grid>
+                </Button>
+                <!--设置 OEM 信息-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.SetOEMInfoCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A1;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="设置 OEM 信息" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="设置 OEM 信息，如制造商、型号与支持电话等" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
 
                 <TextBlock Text="Windows 更新" FontSize="14" Margin="0,10,0,10" TextWrapping="Wrap"/>
 

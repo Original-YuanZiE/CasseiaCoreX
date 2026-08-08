@@ -344,11 +344,11 @@ namespace CasseiaCoreX.Model
             ver = String.Empty;
             deviceCode = String.Empty;
             RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation");
-            if(key != null)
+            if (key != null)
             {
                 ver = key.GetValue("CasseiaOSVersion") != null ? key.GetValue("CasseiaOSVersion").ToString() : String.Empty;
                 deviceCode = key.GetValue("CasseiaDeviceCode") != null ? key.GetValue("CasseiaDeviceCode").ToString() : String.Empty;
-                if(ver != String.Empty)
+                if (ver != String.Empty)
                 {
                     return true;
                 }
@@ -883,6 +883,123 @@ namespace CasseiaCoreX.Model
             }
         }
 
+        public static bool ForceEffectMode
+        {
+            // 强制启用圆角与 Mica
+            get
+            {
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\Dwm", true);
+                if (key != null)
+                {
+                    if (key.GetValue("ForceEffectMode") != null)
+                    {
+                        bool res = key.GetValue("ForceEffectMode").ToString() == "2" ? true : false;
+                        key.Close();
+                        return res;
+                    }
+                    else
+                    {
+                        key.Close();
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\Dwm", true);
+                if (key != null)
+                {
+                    if (value)
+                    {
+                        key.SetValue("ForceEffectMode", "2", RegistryValueKind.DWord);
+                    }
+                    else
+                    {
+                        key.DeleteValue("ForceEffectMode");
+                    }
+                    key.Close();
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
+        public static bool GetOEMInformation(out string manufacturer, out string model, out string supportHours, out string supportPhone, out string supportURL)
+        {
+            // OEM 信息
+            manufacturer = null;
+            model = null;
+            supportHours = null;
+            supportPhone = null;
+            supportURL = null;
+
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation", true);
+            if (key != null)
+            {
+                if (key.GetValue("Manufacturer") != null || key.GetValue("Model") != null || key.GetValue("SupportHours") != null || key.GetValue("SupportPhone") != null || key.GetValue("SupportURL") != null)
+                {
+                    manufacturer = key.GetValue("Manufacturer")?.ToString();
+                    model = key.GetValue("Model")?.ToString();
+                    supportHours = key.GetValue("SupportHours")?.ToString();
+                    supportPhone = key.GetValue("SupportPhone")?.ToString();
+                    supportURL = key.GetValue("SupportURL")?.ToString();
+                    return true;
+                }
+                else
+                {
+                    key.Close();
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public static bool SetOEMInformation(string manufacturer, string model, string supportHours, string supportPhone, string supportURL)
+        {
+            // 设置 OEM 信息
+            RegistryKey key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation", true);
+            if (key != null)
+            {
+                if (!string.IsNullOrEmpty(manufacturer))
+                {
+                    key.SetValue("Manufacturer", manufacturer, RegistryValueKind.String);
+                }
+                if (!string.IsNullOrEmpty(model))
+                {
+                    key.SetValue("Model", model, RegistryValueKind.String);
+                }
+                if (!string.IsNullOrEmpty(supportHours))
+                {
+                    key.SetValue("SupportHours", supportHours, RegistryValueKind.String);
+                }
+                if (!string.IsNullOrEmpty(supportPhone))
+                {
+                    key.SetValue("SupportPhone", supportPhone, RegistryValueKind.String);
+                }
+                if (!string.IsNullOrEmpty(supportURL))
+                {
+                    key.SetValue("SupportURL", supportURL, RegistryValueKind.String);
+                }
+                key.Close();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public sealed partial class WindowsUpdate
         {
             // WindowsUpdate 相关组策略
@@ -1191,7 +1308,7 @@ namespace CasseiaCoreX.Model
                 {
                     output = $"无法复制票据文件或文件不存在\n错误信息：{ex.Message}";
                     return false;
-                    
+
                 }
 
                 Process p = new Process();
@@ -1336,7 +1453,7 @@ namespace CasseiaCoreX.Model
 
                 return true;
 
-                
+
             }
         }
     }

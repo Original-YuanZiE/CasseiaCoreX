@@ -35,10 +35,7 @@ namespace CasseiaCoreX.Pages
             this.Loaded += (s, e) =>
             {
                 ViewModel.LoadInfo();
-                if (ViewModel.CasseiaOSVer == String.Empty)
-                {
-                    CasseiaOSVerShow.Visibility = Visibility.Collapsed;
-                }
+                
             };
 
 

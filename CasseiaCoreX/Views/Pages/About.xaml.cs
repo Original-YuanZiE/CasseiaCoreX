@@ -115,7 +115,7 @@ public sealed partial class About : Page
                 var result = await App.ShowDialog(this.XamlRoot,
                 "发现新版本",
                 $"当前版本: {App.AppUpdateVersion}\n最新版本: {info.TagName}",
-                "前往下载",
+                "查看更新",
                 "我知道了",
                 null,
                 ContentDialogButton.Primary);
