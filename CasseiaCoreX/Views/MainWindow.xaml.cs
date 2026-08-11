@@ -118,6 +118,9 @@ namespace CasseiaCoreX
                 case "NavigateAbout":
                     MainFrame.Navigate(typeof(About));
                     break;
+                case "NavigateADB":
+                    MainFrame.Navigate(typeof(AndroidDebug));
+                    break;
             }
         }
 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CasseiaCoreX.Views.AndroidAppManagement"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CasseiaCoreX.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="AndroidAppManagement">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop  Kind="BaseAlt"/>
+    </Window.SystemBackdrop>
+
+    <Grid>
+        <Grid x:Name="MainGrid" VerticalAlignment="Stretch">
+
+            <Grid.RowDefinitions>
+                <!--标题栏-->
+                <RowDefinition Height="48"/>
+                <!--客户区-->
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--标题区域-->
+            <Grid Grid.Row="0">
+                <TextBlock x:Name="TitleText" Text="CasseiaCoreX - 管理安卓设备 App" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="25" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Spacing="10" VerticalAlignment="Stretch">
+                        <!--ComboBox x:Name="DevicesComboBox" Header="选择设备" IsEditable="True" HorizontalAlignment="Stretch" Width="300" ItemsSource="{x:Bind devicesList}" SelectedItem="{x:Bind selectedDeviceId, Mode=TwoWay}">
+                        </ComboBox-->
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Stretch">
+                            <!--
+                            <ComboBox x:Name="AppTypeComboBox" HorizontalAlignment="Stretch" Width="230" SelectedIndex="0">
+                                <x:String>第三方应用</x:String>
+                                <x:String>系统应用</x:String>
+                            </ComboBox>
+                            -->
+                            <AutoSuggestBox PlaceholderText="搜索应用程序" x:Name="SearchAppBox" Width="230" TextChanged="SearchAppBox_TextChanged"/>
+                            <Button x:Name="Refresh" VerticalAlignment="Bottom" BorderBrush="Transparent" Background="Transparent" Width="50" Click="Refresh_Click">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE777;"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid VerticalAlignment="Stretch" Grid.Row="1">
+                        <ScrollViewer VerticalAlignment="Stretch">
+                            <ListView x:Name="AppListView" VerticalAlignment="Stretch" SelectionChanged="AppListView_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="local:AppInfoClass">
+                                        <Grid HorizontalAlignment="Stretch" Height="80">
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                <TextBlock Text="{x:Bind AppName}" FontWeight="Bold" TextAlignment="Left"/>
+                                                <TextBlock Text="{x:Bind Package}" TextAlignment="Left"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="AppInfoGrid" Grid.Column="1" MaxWidth="1000" Visibility="Collapsed" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical" Spacing="10" MaxWidth="1000">
+
+                        <TextBlock x:Name="AppNameDisp" Margin="0,0,0,0" TextAlignment="Center" FontSize="60" FontWeight="Bold" Text="AppName"/>
+                        <TextBlock x:Name="AppPackDisp" Margin="0,0,0,50" TextAlignment="Center" Text="com.company.app"/>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
+                            <Button x:Name="OpenApp" Background="Transparent" BorderBrush="Transparent" Width="100" Height="100" Click="OpenApp_Click">
+                                <StackPanel Orientation="Vertical" Spacing="5" VerticalAlignment="Center">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A7;"/>
+                                    <TextBlock Text="打开" TextAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="UninstallApp" Background="Transparent" BorderBrush="Transparent" Width="100" Height="100" Click="UninstallApp_Click">
+                                <StackPanel Orientation="Vertical" Spacing="5" VerticalAlignment="Center">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74D;"/>
+                                    <TextBlock Text="卸载" TextAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="ForceStopApp" Background="Transparent" BorderBrush="Transparent" Width="100" Height="100" Click="ForceStopApp_Click">
+                                <StackPanel Orientation="Vertical" Spacing="5" VerticalAlignment="Center">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE733;"/>
+                                    <TextBlock Text="强行停止" TextAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="PullApk" Background="Transparent" BorderBrush="Transparent" Width="100" Height="100" Click="PullApk_Click">
+                                <StackPanel Orientation="Vertical" Spacing="5" VerticalAlignment="Center">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE898;"/>
+                                    <TextBlock Text="提取安装包" TextAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid x:Name="AwaitOverlay" Visibility="Collapsed">
+            <Grid.Background>
+                <AcrylicBrush TintColor="Black" TintOpacity="0.95"/>
+            </Grid.Background>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <ProgressRing IsActive="True" Width="80" Height="80" Foreground="White"/>
+                    <TextBlock x:Name="AwaitText" Text="请等待后台操作或弹出窗口返回" TextAlignment="Center" Foreground="White" FontSize="20" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

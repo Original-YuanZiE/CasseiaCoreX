@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace CasseiaCoreX
         public static string AppVersion
         {
             // App 版本
-            get => "1.0.1.1_2608508A_Release";
+            get => "1.1.0.0_2608611A_Release";
         }
 
         public static string AppUpdateChannel
@@ -74,7 +75,7 @@ namespace CasseiaCoreX
         public static string AppUpdateVersion
         {
             // 用于 OTA 的版本号
-            get => "1.0.1.1";
+            get => "1.1.0.0";
         }
 
         public static bool IsRunningAsAdmin()
@@ -102,6 +103,36 @@ namespace CasseiaCoreX
 
             return await dialog.ShowAsync();
 
+        }
+
+        public static bool DownloadFile(string uri, string localFileName, out string errorMessage)
+        {
+            // 下载文件
+            errorMessage = null;
+            try
+            {
+                var server = new Uri(uri);
+                var p = System.IO.Path.GetDirectoryName(localFileName);
+                if (!Directory.Exists(p)) Directory.CreateDirectory(p);
+
+                var httpClient = new HttpClient();
+                httpClient.Timeout = TimeSpan.FromSeconds(3600);
+                var responseMessage = httpClient.GetAsync(server).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    using (var fs = File.Create(localFileName))
+                    {
+                        var streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
+                        streamFromService.CopyTo(fs);
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return errorMessage == null;
         }
     }
 }

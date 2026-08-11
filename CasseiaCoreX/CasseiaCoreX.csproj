@@ -20,7 +20,9 @@
     <Page Remove="View\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\AndroidAppManagement.xaml" />
     <None Remove="Views\Pages\About.xaml" />
+    <None Remove="Views\Pages\AndroidDebug.xaml" />
     <None Remove="Views\Pages\Home.xaml" />
     <None Remove="Views\Pages\Personalization.xaml" />
     <None Remove="Views\Pages\SysSettings.xaml" />
@@ -79,6 +81,13 @@
     <PRIResource Remove="View\**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Assets\ADB\platform-tools-latest-windows.zip" />
+    <Content Remove="Assets\ADB\platform-tools\aapt-arm-pie" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\ADB\aapt-arm-pie">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\GenuineTickets\Cloud.S.N.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -168,13 +177,28 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Assets\ADB\platform-tools-latest-windows.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\ADB\aapt-arm-pie">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CasseiaCoreXIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\AndroidAppManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\AndroidDebug.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Pages\About.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\ADB\platform-tools\" />
   </ItemGroup>
 </Project>
