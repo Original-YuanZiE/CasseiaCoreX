@@ -250,6 +250,22 @@
                         <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
                     </Grid>
                 </Button>
+                <!--MAS 激活-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.MASCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8D7;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="Microsoft Activation Scripts (MAS)" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="使用著名开源项目 MAS 激活 Windows 及 Office" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
                 <!--数字激活-->
                 <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.HWIDCommand, Mode=OneWay}">
                     <Grid HorizontalAlignment="Stretch">
@@ -260,7 +276,7 @@
                         </Grid.ColumnDefinitions>
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8D7;"/>
                         <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                            <TextBlock Text="数字激活 (Beta)" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="[暂时失效]数字激活 (Beta)" FontWeight="Bold" TextWrapping="Wrap"/>
                             <TextBlock Text="使用 HWID 激活 Windows，部分版本无法使用此功能激活" TextWrapping="Wrap"/>
                         </StackPanel>
                         <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>

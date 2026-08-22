@@ -83,6 +83,7 @@
   <ItemGroup>
     <Content Remove="Assets\ADB\platform-tools-latest-windows.zip" />
     <Content Remove="Assets\ADB\platform-tools\aapt-arm-pie" />
+    <Content Remove="Assets\MAS_AIO_CN.cmd" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\ADB\aapt-arm-pie">
@@ -181,6 +182,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ADB\aapt-arm-pie">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\MAS_AIO_CN.cmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CasseiaCoreXIcon.png">

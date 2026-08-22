@@ -60,6 +60,34 @@ namespace CasseiaCoreX.Pages
             ViewModel.Home2ProEvent += HomeToPro;
             ViewModel.BackupKeysEvent += BackupKey;
             ViewModel.SetOEMInfoEvent += EditOEMInfo;
+            ViewModel.MASEvent += MASActivate;
+        }
+
+        private async void MASActivate(object sender, EventArgs e)
+        {
+            var result = await App.ShowDialog(this.XamlRoot,
+                "Microsoft Activation Scripts (MAS)",
+                "使用著名的开源项目 Microsoft Activation Scripts 激活 Windows 与 Office\n您可以选择在线版以联网获取最新版本\n我们也提供本地版来应对网络不佳的情况，但是无法保证功能最新",
+                "在线",
+                "本地",
+                "取消",
+                ContentDialogButton.Primary);
+
+            if (result == ContentDialogResult.Primary)
+            {
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = "Powershell.exe";
+                psi.Arguments = "irm https://get.activated.win | iex";
+                Process.Start(psi);
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                Process.Start(Path.Combine(App.Root, "Assets", "MAS_AIO_CN.cmd"));
+            }
+            else
+            {
+                return;
+            }
         }
 
         private async void CurrentPermission(object sender, RoutedEventArgs e)

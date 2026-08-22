@@ -194,6 +194,10 @@ namespace CasseiaCoreX.ViewModels
         public ICommand ClearKeysCommand;
         public event EventHandler ClearKeysEvent;
 
+        // MAS 激活
+        public ICommand MASCommand;
+        public event EventHandler MASEvent;
+
         // 数字激活
         public ICommand HWIDCommand;
         public event EventHandler HWIDEvent;
@@ -260,6 +264,11 @@ namespace CasseiaCoreX.ViewModels
             SetOEMInfoCommand = new RelayCommand(() =>
             {
                 SetOEMInfoEvent?.Invoke(this, EventArgs.Empty);
+            });
+
+            MASCommand = new RelayCommand(() =>
+            {
+                MASEvent?.Invoke(this, EventArgs.Empty);
             });
         }
 
