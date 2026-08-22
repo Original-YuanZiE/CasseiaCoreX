@@ -2,7 +2,7 @@
 
 一个基于 WinUI3 的系统工具箱
 
-
+![应用截图]("ScreenShot.png")
 
 环境要求：
 
@@ -34,7 +34,7 @@ Windows App SDK 2.2.0
 10. 禁用 Windows 更新
 11. 设置最大暂停更新天数（仅对 Windows 11 25H2 以下版本及 25H2 部分版本生效）
 12. 清除已安装密钥
-13. 数字激活 Windows （HWID）
+13. [暂时失效]数字激活 Windows （HWID）
 14. 家庭版转专业版
 15. 备份激活密钥
 16. 备份驱动
@@ -42,3 +42,7 @@ Windows App SDK 2.2.0
 18. 无 GPU 驱动时强制启用 Mica 与圆角效果
 19. 设置 OEM 信息
 20. ADB 调试（安装应用、获取截屏、管理应用等）
+21. 集成 Microsoft Activation Scripts (MAS)
+
+本软件参考/使用了以下开源项目：
+[](https://github.com/cmontage/mas-cn/tree/main "Microsoft Activation Scripts (MAS)")
