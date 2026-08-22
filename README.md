@@ -2,7 +2,7 @@
 
 一个基于 WinUI3 的系统工具箱
 
-![应用截图]("ScreenShot.png")
+![应用截图]("https://github.com/Original-YuanZiE/CasseiaCoreX/blob/master/ScreenShot.png?raw=true")
 
 环境要求：
 
@@ -45,4 +45,5 @@ Windows App SDK 2.2.0
 21. 集成 Microsoft Activation Scripts (MAS)
 
 本软件参考/使用了以下开源项目：
+
 [Microsoft Activation Scripts (MAS)](https://github.com/cmontage/mas-cn/tree/main)
