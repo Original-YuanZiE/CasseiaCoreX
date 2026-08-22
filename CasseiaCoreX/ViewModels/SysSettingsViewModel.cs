@@ -283,6 +283,7 @@ namespace CasseiaCoreX.ViewModels
             Set(ref _disableDefender, SystemSettings.SwitchDefender, nameof(DisableDefender));
             SystemSettings.WindowsUpdate WU = new SystemSettings.WindowsUpdate();
             Set(ref _maxDelayTime, WU.MaxAllowDelayDays, nameof(MaxDelayTime));
+            Set(ref _disableUpdate, WU.IsEnable, nameof(DisableUpdate));
             Set(ref _forceEffectMode, SystemSettings.ForceEffectMode, nameof(ForceEffectMode));
             WU.Close();
         }
