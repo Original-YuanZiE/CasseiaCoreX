@@ -2,7 +2,7 @@
 
 一个基于 WinUI3 的系统工具箱
 
-![应用截图]("https://github.com/Original-YuanZiE/CasseiaCoreX/raw/master/ScreenShot.png")
+![应用截图](https://github.com/Original-YuanZiE/CasseiaCoreX/raw/master/ScreenShot.png)
 
 环境要求：
 
