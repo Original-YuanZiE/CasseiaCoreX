@@ -76,6 +76,7 @@
     <PublishAot>False</PublishAot>
     <SignAssembly>False</SignAssembly>
     <ApplicationIcon>CasseiaCoreXIcon.ico</ApplicationIcon>
+    <AssemblyOriginatorKeyFile>C:\Userdata\工作区\Cert.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <PRIResource Remove="View\**" />
@@ -188,6 +189,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CasseiaCoreXIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Cert.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Views\AndroidAppManagement.xaml">

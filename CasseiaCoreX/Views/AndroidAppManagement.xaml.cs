@@ -64,7 +64,7 @@ public sealed partial class AndroidAppManagement : Window, INotifyPropertyChange
 
         androidAppManagement = this;
         devicesList = devices;
-        selectedDeviceId = SelectedDeviceId;
+        selectedDeviceId = SelectedDeviceId.Replace(":", "_");
 
         AppInfoClass appInfoClass = new AppInfoClass();
         List<string> tmp = new List<string>();

@@ -63,6 +63,16 @@ public sealed partial class AndroidDebug : Page
         ViewModel.ConnectDeviceEvent += ConnectDevice;
         ViewModel.InstallAppEvent += InstallApk;
         ViewModel.ManageAppEvent += ManageApp;
+        ViewModel.AdbConsoleEvent += AdbConsole;
+    }
+
+    public async void AdbConsole(object sender, EventArgs e)
+    {
+        // 打开 ADB 控制台
+        await Task.Run(() =>
+        {
+            Models.AndroidDebug.AdbConsole();
+        });
     }
 
     public async void UsePairCode(object sender, EventArgs e)

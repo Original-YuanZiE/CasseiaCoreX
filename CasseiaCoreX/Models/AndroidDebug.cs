@@ -37,6 +37,21 @@ namespace CasseiaCoreX.Models
             return;
         }
 
+        public static async void AdbConsole()
+        {
+            // 打开 ADB 控制台
+            ProcessStartInfo pi = new ProcessStartInfo();
+            pi.FileName = "cmd.exe";
+            pi.Arguments = "/k adb devices";
+            pi.WorkingDirectory = Path.Combine(App.Root, "Assets", "ADB", "platform-tools");
+            pi.RedirectStandardInput = false;
+            pi.RedirectStandardOutput = false;
+            pi.RedirectStandardError = false;
+            pi.UseShellExecute = true;
+            pi.WindowStyle = ProcessWindowStyle.Normal;
+            Process p = Process.Start(pi);
+        }
+
         public static void GetDevices(out List<string> devices)
         {
             // 获取连接的设备
@@ -126,7 +141,7 @@ namespace CasseiaCoreX.Models
                 }
             };
             p.BeginOutputReadLine();
-            
+
             if (!p.WaitForExit(10000))
             {
                 p.Kill();
@@ -216,6 +231,6 @@ namespace CasseiaCoreX.Models
             return p.ExitCode == 0;
         }
 
-        
+
     }
 }

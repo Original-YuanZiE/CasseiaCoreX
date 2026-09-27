@@ -151,6 +151,22 @@
                         <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
                     </Grid>
                 </Button>
+                <!--控制台-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.AdbConsoleCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE756;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="ADB 控制台" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="执行任意 ADB/Fastboot 命令" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -53,6 +53,10 @@ namespace CasseiaCoreX.ViewModels
         public ICommand ManageAppCommand;
         public event EventHandler ManageAppEvent;
 
+        // ADB 控制台
+        public ICommand AdbConsoleCommand;
+        public event EventHandler AdbConsoleEvent;
+
         public AndroidDebugViewModel()
         {
             KillAdbCommand = new RelayCommand(() =>
@@ -93,6 +97,11 @@ namespace CasseiaCoreX.ViewModels
             ManageAppCommand = new RelayCommand(() =>
             {
                 ManageAppEvent?.Invoke(this, EventArgs.Empty);
+            });
+
+            AdbConsoleCommand = new RelayCommand(() =>
+            {
+                AdbConsoleEvent?.Invoke(this, EventArgs.Empty);
             });
         }
     }
