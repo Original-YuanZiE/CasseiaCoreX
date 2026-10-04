@@ -61,3 +61,5 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+CasseiaCoreX/Assets/MAS_AIO_CN.cmd linguist-vendored
