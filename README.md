@@ -47,3 +47,7 @@ Windows App SDK 2.2.0
 本软件参考/使用了以下开源项目：
 
 [Microsoft Activation Scripts (MAS)](https://github.com/cmontage/mas-cn/tree/main)
+
+[APDE](https://github.com/Calsign/APDE)
+
+[Android Debug Bridge](https://android.googlesource.com/platform/packages/modules/adb.git)
