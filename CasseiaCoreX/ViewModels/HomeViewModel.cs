@@ -22,6 +22,14 @@ namespace CasseiaCoreX.ViewModels
             set => Set(ref _wallpaper, value);
         }
 
+        // 原始设备名称
+        private string _originalDeviceName = "null";
+        public string OriginalDeviceName
+        {
+            get => _originalDeviceName;
+            set => Set(ref _originalDeviceName, value);
+        }
+
         // CPU
         private string _cpuName = "null";
         public string CPUName
@@ -114,10 +122,17 @@ namespace CasseiaCoreX.ViewModels
         public ICommand ShowGpuListCommand { get; }
         public event EventHandler RequestShowGpuList;
 
+        public ICommand ShowSMBIOSCommand { get; }
+        public event EventHandler RequestShowSMBIOS;
+
 
         public HomeViewModel()
         {
             ShowGpuListCommand = new RelayCommand(OnShowGpuList);
+            ShowSMBIOSCommand = new RelayCommand( () =>
+            {
+                RequestShowSMBIOS?.Invoke(this, EventArgs.Empty);
+            });
         }
         public void LoadInfo()
         {
@@ -127,6 +142,9 @@ namespace CasseiaCoreX.ViewModels
                 Wallpaper = new BitmapImage(new Uri(Explorer.Wallpaper));
             }
             catch { }
+            // 原始设备名称
+            var system = Models.SMBIOS.GetSystemInfo();
+            OriginalDeviceName = string.IsNullOrEmpty(system.ProductName) ? "To be filled by O.E.M." : system.ProductName;
             // 处理器
             CPUName = DeviceInfo.GetCPUName();
             // 内存
@@ -187,9 +205,8 @@ namespace CasseiaCoreX.ViewModels
             }
             return firstGPU;
         }
-        /// <summary>
-        /// 格式化屏幕分辨率信息
-        /// </summary>
+
+
         private string FormatDisplayInfo()
         {
             int x = DeviceInfo.GetDisplayInfo(0);

@@ -41,6 +41,7 @@ namespace CasseiaCoreX.Pages
 
             // 订阅 ViewModel 的事件
             ViewModel.RequestShowGpuList += OnRequestShowGpuList;
+            ViewModel.RequestShowSMBIOS += ShowSMBIOSInfo;
 
             // 启动界面自适应
             RootGrid.SizeChanged += (s, e) => UpdateStateIndicator();
@@ -52,6 +53,19 @@ namespace CasseiaCoreX.Pages
                 }
                 MainWindow.mainWindow.isStartupWindowSizeChangeFinish = true;
             };
+        }
+
+        private async void ShowSMBIOSInfo(object sender, EventArgs e)
+        {
+            // 弹出 SMBIOS 信息
+            var sys = Models.SMBIOS.GetSystemInfo();
+            var result = await App.ShowDialog(this.XamlRoot,
+                "设备信息",
+                $"产品名称: {sys.ProductName}\n\n制造商: {sys.Manufacturer}\n\n序列号: {sys.SerialNumber}\n\n版本: {sys.Version}\n\nSKU: {sys.SKU}\n\n家族: {sys.Family}",
+                "好",
+                null,
+                null,
+                ContentDialogButton.Primary);
         }
 
         private void UpdateStateIndicator()

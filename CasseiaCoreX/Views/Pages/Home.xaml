@@ -24,7 +24,20 @@
             <Grid Margin="40" x:Name="InfoShow">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center">
 
-                    
+                    <!--显示设备原始名称-->
+                    <Button Command="{Binding ShowSMBIOSCommand}" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7F8;"/>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind ViewModel.OriginalDeviceName, Mode=OneWay}" FontWeight="Bold"/>
+                                <TextBlock x:Name="OriginalNameShow" Text="点此展开详细信息"/>
+                            </StackPanel>
+                        </Grid>
+                    </Button>
                     <!--显示 CPU 名称-->
                     <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
                         <Grid HorizontalAlignment="Stretch">

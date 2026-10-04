@@ -482,16 +482,24 @@ namespace CasseiaCoreX.Pages
                     "OEM 信息",
                     stackPanel,
                     "保存",
+                    "同步 SMBIOS",
                     "取消",
-                    null,
                     ContentDialogButton.Primary);
 
-            if (result != ContentDialogResult.Primary)
+            if (result == ContentDialogResult.Primary)
+            {
+                Model.SystemSettings.SetOEMInformation(manufacturerBox.Text, modelBox.Text, supportHoursBox.Text, supportPhoneBox.Text, supportURLBox.Text);
+            }
+            else if (result == ContentDialogResult.Secondary)
+            {
+                var sys = Models.SMBIOS.GetSystemInfo();
+                Model.SystemSettings.SetOEMInformation(sys.Manufacturer, sys.ProductName, supportHoursBox.Text, supportPhoneBox.Text, supportURLBox.Text);
+                EditOEMInfo(sender, e);
+            }
+            else
             {
                 return;
             }
-
-            Model.SystemSettings.SetOEMInformation(manufacturerBox.Text, modelBox.Text, supportHoursBox.Text, supportPhoneBox.Text, supportURLBox.Text);
         }
     }
 }
