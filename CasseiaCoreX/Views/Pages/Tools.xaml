@@ -49,7 +49,59 @@
                         <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
                     </Grid>
                 </Button>
+
+                <TextBlock Text="格式转换" FontSize="14" Margin="0,0,0,10" TextWrapping="Wrap"/>
+
+                <!--补全 Codec-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.CompleteWICCodecsCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE955;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="补全 Windows Media Foundation Codecs" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="补全 Windows 的常用媒体库" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
+                <!--图片转换-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.ConvertImageFormatCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEE71;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="(Beta) 图片格式批量转换" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="将选择的图片文件转换为其他格式，支持常见图片格式" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
+                <!--音视频转换-->
+                <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" MinHeight="80" Command="{x:Bind ViewModel.ConvertMediaFormatCommand, Mode=OneWay}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA69;"/>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock Text="(Beta) 音视频格式批量转换" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <TextBlock Text="将选择的媒体文件转换为其他格式，支持常见媒体格式与网易云音乐加密格式" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <FontIcon Grid.Column="2" FontFamily="Segoe Fluent Icons" Glyph="&#xE724;"/>
+                    </Grid>
+                </Button>
             </StackPanel>
         </Grid>
     </ScrollViewer>
+    
 </Page>

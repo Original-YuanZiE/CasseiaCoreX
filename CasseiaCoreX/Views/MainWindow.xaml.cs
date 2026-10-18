@@ -9,13 +9,17 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,10 +29,35 @@ namespace CasseiaCoreX
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-
         public static MainWindow? mainWindow;
+        public static void SetValue(string propertyName)
+        {
+            mainWindow?.PropertyChanged?.Invoke(mainWindow, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _OverlayText = "请等待后台操作或弹出窗口返回";
+        public string OverlayText
+        {
+            get => _OverlayText;
+            set
+            {
+                _OverlayText = value;
+                SetValue(nameof(OverlayText));
+            }
+        }
+
+        private SolidColorBrush _backColor = new SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+        public SolidColorBrush BackColor
+        {
+            get => _backColor;
+            set
+            {
+                _backColor = value;
+                SetValue(nameof(BackColor));
+            }
+        }
 
         public NavigationView NavigationView => MainNavView;
 
@@ -39,6 +68,8 @@ namespace CasseiaCoreX
 
         // 是否已完成窗口大小初始化
         public bool isStartupWindowSizeChangeFinish = false;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private bool IsRunningAsAdmin()
         {
@@ -53,7 +84,7 @@ namespace CasseiaCoreX
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
-        public MainWindow()
+        public MainWindow(string NavigateTarget = "NavigateHome")
         {
             InitializeComponent();
 
@@ -74,7 +105,7 @@ namespace CasseiaCoreX
 
             // 加载主页
             MainNavView.SelectedItem = NavigateHome;
-            FrameNavigation("NavigateHome");
+            FrameNavigation(NavigateTarget);
         }
 
         public void MaxWindow()
@@ -105,21 +136,31 @@ namespace CasseiaCoreX
             {
                 case "NavigateHome":
                     MainFrame.Navigate(typeof(Home));
+                    MainNavView.SelectedItem = NavigateHome;
                     break;
                 case "NavigateSysSettings":
                     MainFrame.Navigate(typeof(SysSettings));
+                    MainNavView.SelectedItem = NavigateSysSettings;
                     break;
                 case "NavigatePersonalization":
                     MainFrame.Navigate(typeof(Personalization));
+                    // MainNavView.SelectedItem = NavigatePersonalization;
                     break;
                 case "NavigateTools":
                     MainFrame.Navigate(typeof(Tools));
+                    MainNavView.SelectedItem = NavigateTools;
                     break;
                 case "NavigateAbout":
                     MainFrame.Navigate(typeof(About));
+                    MainNavView.SelectedItem = NavigateAbout;
                     break;
                 case "NavigateADB":
                     MainFrame.Navigate(typeof(AndroidDebug));
+                    MainNavView.SelectedItem = NavigateADB;
+                    break;
+                default:
+                    MainFrame.Navigate(typeof(Home));
+                    MainNavView.SelectedItem = NavigateHome;
                     break;
             }
         }
@@ -127,9 +168,55 @@ namespace CasseiaCoreX
         public void ShowAwaitOverlay(bool value, string text = "请等待后台操作或弹出窗口返回")
         {
             // 显示或隐藏等待叠加层
+            BackColor = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["ThemeColor"]);
             AwaitOverlay.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-            if (!value) { return; }
-            AwaitText.Text = text;
+            if (!value) 
+            {
+                BackColor = new SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+                return;
+            }
+            OverlayText = text;
+        }
+
+        public void ShowWindowOverlay(bool value, Type? page = null, string title = "WindowOverlayTitle", bool onlyCollapsed = false)
+        {
+            // 显示或隐藏窗口叠加层
+            BackColor = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["ThemeColor"]);
+            WindowOverlayTitle.Text = title;
+            WindowOverlay.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            if (!value)
+            {
+                BackColor = new SolidColorBrush(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+                if (!onlyCollapsed)
+                {
+                    WindowOverlayFrame.Content = null;
+                }
+                return;
+            }
+            WindowOverlayFrame.Navigate(page);
+            WindowOverlay.Focus(FocusState.Programmatic);
+        }
+
+        private void OverlayClose_Tapped(object sender, RoutedEventArgs e)
+        {
+            // 关闭窗口叠加层
+            ShowWindowOverlay(false);
+        }
+
+        private async void OverlayConfirm_Tapped(object sender, RoutedEventArgs e)
+        {
+            // 窗口叠加层确定指令
+            var pageClass = WindowOverlayFrame.Content;
+            ViewModels.IInternalWindowPage internalWindowPage = (ViewModels.IInternalWindowPage)pageClass;
+            await internalWindowPage.ConfirmCommand();
+        }
+
+        private void WindowOverlay_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                ShowWindowOverlay(false);
+            }
         }
     }
 }

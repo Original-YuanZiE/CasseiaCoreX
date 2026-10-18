@@ -35,7 +35,7 @@ namespace CasseiaCoreX.Pages
             this.Loaded += (s, e) =>
             {
                 ViewModel.LoadInfo();
-                
+
             };
 
 
@@ -107,6 +107,34 @@ namespace CasseiaCoreX.Pages
                 null,
                 null,
                 ContentDialogButton.Primary);
+        }
+
+        private int CoreVerClickNum = 0;
+
+        private async void CasseiaCoreVer_Click(object sender, RoutedEventArgs e)
+        {
+            CoreVerClickNum++;
+            if (CoreVerClickNum >= 5)
+            {
+                App.EnableDevConsole = !App.EnableDevConsole;
+                string tipStatus = "";
+                if (App.EnableDevConsole)
+                {
+                    tipStatus = "开启";
+                }
+                else
+                {
+                    tipStatus = "关闭";
+                }
+                var result = await App.ShowDialog(this.XamlRoot,
+                "开发人员模式",
+                $"已{tipStatus}调试命令提示符，重启 App 生效",
+                "好",
+                null,
+                null,
+                ContentDialogButton.Primary);
+            }
+
         }
     }
 }

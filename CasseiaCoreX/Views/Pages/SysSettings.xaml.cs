@@ -115,6 +115,7 @@ namespace CasseiaCoreX.Pages
                     startInfo.UseShellExecute = true;
                     startInfo.Verb = "runas";
                     startInfo.FileName = Path.Combine(App.Root, "CasseiaCoreX.exe");
+                    startInfo.Arguments = "-SysSettings";
 
                     try
                     {

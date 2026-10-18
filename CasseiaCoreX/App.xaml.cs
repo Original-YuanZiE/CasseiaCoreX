@@ -6,11 +6,13 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -29,7 +31,13 @@ namespace CasseiaCoreX
     /// </summary>
     public partial class App : Application
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
         private Window? _window;
+
+        public string ConsoleGreeting =
+        "   ____                              _         \r\n  / ___|   __ _   ___   ___    ___  (_)   __ _ \r\n | |      / _` | / __| / __|  / _ \\ | |  / _` |\r\n | |___  | (_| | \\__ \\ \\__ \\ |  __/ | | | (_| |\r\n  \\____|  \\__,_| |___/ |___/  \\___| |_|  \\__,_|\r\n                                               ";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -46,8 +54,71 @@ namespace CasseiaCoreX
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
-            _window.Activate();
+            string[] cmdArgs = Environment.GetCommandLineArgs();
+            if (EnableDevConsole)
+            {
+                AllocConsole();
+                Console.Title = "DevConsole By Casseia";
+                Console.InputEncoding = System.Text.Encoding.UTF8;
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+            }
+            
+            Console.WriteLine($"Connected to Console\nAdministrator: {IsRunningAsAdmin()}\nArgs: {string.Join(" ", cmdArgs)}\nTime: {DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss dddd")}\nApp Version: {AppVersion}\n\n{ConsoleGreeting}");
+
+            int r = ResolveArgs(cmdArgs);
+            switch (r)
+            {
+                case 0:
+                    _window = new MainWindow();
+                    _window.Activate();
+                    break;
+                case 1:
+                    _window = new MainWindow("NavigateSysSettings");
+                    _window.Activate();
+                    break;
+                case 2:
+                    _window = new MainWindow("NavigateTools");
+                    _window.Activate();
+                    break;
+                case 3:
+                    _window = new MainWindow("NavigateAbout");
+                    _window.Activate();
+                    break;
+                case 4:
+                    _window = new MainWindow("NavigateADB");
+                    _window.Activate();
+                    break;
+            }
+        }
+
+        private static int ResolveArgs(string[] args)
+        {
+            // 解析启动参数
+            if (args == null || args.Length == 0)
+            {
+                return 0;
+            }
+
+            foreach (var arg in args)
+            {
+                if (arg.StartsWith("-"))
+                {
+                    switch (arg)
+                    {
+                        case "-Home":
+                            return 0;
+                        case "-SysSettings":
+                            return 1;
+                        case "-Tools":
+                            return 2;
+                        case "-About":
+                            return 3;
+                        case "-AndroidDebug":
+                            return 4;
+                    }
+                }
+            }
+            return 0;
         }
 
         public static string Root
@@ -60,10 +131,24 @@ namespace CasseiaCoreX
 
         }
 
+        public static bool EnableDevConsole
+        {
+            get
+            {
+                using RegistryKey? key = Registry.CurrentUser.OpenSubKey(@"Software\Casseia\CasseiaCoreX");
+                return key?.GetValue("DevConsole") is int value && value == 1;
+            }
+            set
+            {
+                using RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Casseia\CasseiaCoreX");
+                key.SetValue("DevConsole", value ? 1 : 0, RegistryValueKind.DWord);
+            }
+        }
+
         public static string AppVersion
         {
             // App 版本
-            get => "1.2.5.1_2610104N_Release";
+            get => "1.5.0.0_2610218X_Release";
         }
 
         public static string AppUpdateChannel
@@ -75,7 +160,7 @@ namespace CasseiaCoreX
         public static string AppUpdateVersion
         {
             // 用于 OTA 的版本号
-            get => "1.2.5.1";
+            get => "1.5.0.0";
         }
 
         public static bool IsRunningAsAdmin()

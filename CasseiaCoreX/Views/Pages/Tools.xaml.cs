@@ -1,10 +1,13 @@
 using CasseiaCoreX.Model;
+using CasseiaCoreX.Models;
 using CasseiaCoreX.ViewModels;
+using CasseiaCoreX.Views.Pages;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
@@ -13,11 +16,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Imaging;
+using static CasseiaCoreX.Models.ConvertFileModel.ImageConverter;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,15 +44,15 @@ namespace CasseiaCoreX.Pages
             InitializeComponent();
             DataContext = ViewModel;
 
-            // 判断权限
-            this.Loaded += CurrentPermission;
-
             // 注册事件
             ViewModel.BackupDriversEvent += BackupDrivers;
             ViewModel.ImportDriversEvent += ImportDriver;
+            ViewModel.ConvertImageFormatEvent += ConvertImageFormat;
+            ViewModel.ConvertMediaFormatEvent += ConvertMediaFormat;
+            ViewModel.CompleteWICCodecsEvent += CompleteCodecs;
         }
 
-        private async void CurrentPermission(object sender, RoutedEventArgs e)
+        private async Task CurrentPermission()
         {
 
             if (!App.IsRunningAsAdmin())
@@ -64,13 +70,13 @@ namespace CasseiaCoreX.Pages
                 dialog.Content = "需要管理员权限才能正常修改此页面的设置项，是否允许应用以管理员身份重新启动？";
 
                 var result = await dialog.ShowAsync();
-
                 if (result == ContentDialogResult.Primary)
                 {
                     ProcessStartInfo startInfo = new ProcessStartInfo();
                     startInfo.UseShellExecute = true;
                     startInfo.Verb = "runas";
                     startInfo.FileName = Path.Combine(App.Root, "CasseiaCoreX.exe");
+                    startInfo.Arguments = "-Tools";
 
                     try
                     {
@@ -93,6 +99,7 @@ namespace CasseiaCoreX.Pages
         private async void BackupDrivers(object sender, EventArgs e)
         {
             // 备份驱动
+            await CurrentPermission();
             WindowId windowId = new WindowId((ulong)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.mainWindow));
             var picker = new FolderPicker(windowId);
 
@@ -160,6 +167,7 @@ namespace CasseiaCoreX.Pages
         private async void ImportDriver(object sender, EventArgs e)
         {
             // 导入驱动
+            await CurrentPermission();
             WindowId windowId = new WindowId((ulong)WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.mainWindow));
             var picker = new FolderPicker(windowId);
 
@@ -206,5 +214,125 @@ namespace CasseiaCoreX.Pages
                 ContentDialogButton.Primary);
 
         }
+
+        private async void CompleteCodecs(object sender, EventArgs e)
+        {
+            var result = await App.ShowDialog(this.XamlRoot,
+                "补全 Windows Media Foundation Codec ?",
+                null,
+                "确定",
+                "取消",
+                null,
+                ContentDialogButton.Primary);
+
+            if (result != ContentDialogResult.Primary)
+            {
+                return;
+            }
+
+            MainWindow.mainWindow?.ShowAwaitOverlay(true);
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    ZipFile.ExtractToDirectory(Path.Combine(App.Root, "Assets", "Codecs.zip"), Path.Combine(App.Root, "Assets", "Codecs"), true);
+                });
+                ProcessStartInfo psi = new ProcessStartInfo()
+                {
+                    FileName = "powershell.exe",
+                    WorkingDirectory = Path.Combine(App.Root, "Assets", "Codecs"),
+                    Arguments = "-NoProfile -ExecutionPolicy Bypass -Command \"Add-AppxPackage *\"",
+                    UseShellExecute = false
+                };
+
+                using Process process = Process.Start(psi)!;
+                await process.WaitForExitAsync();
+
+            }
+            catch (Exception ex)
+            {
+                MainWindow.mainWindow?.ShowAwaitOverlay(false);
+                await App.ShowDialog(this.XamlRoot,
+                "操作失败",
+                ex.Message,
+                "好",
+                null,
+                null,
+                ContentDialogButton.Primary);
+                return;
+            }
+            finally
+            {
+                MainWindow.mainWindow?.ShowAwaitOverlay(false);
+            }
+        }
+
+        private async Task<bool> CheckAndInitFFMPEG()
+        {
+            // 检查 ffmpeg 存在性并提供初始化文件入口
+            Models.ConvertFileModel.FFMPEGManager manager = new();
+            if (manager.IsFFMPEGExist())
+            {
+                return true;
+            }
+            else
+            {
+                MainWindow.mainWindow?.ShowAwaitOverlay(true, "请等待 ffmpeg 初始化");
+                try
+                {
+                    await manager.UnZipFFMPEG();
+                    MainWindow.mainWindow?.ShowAwaitOverlay(false);
+                    if (manager.IsFFMPEGExist())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MainWindow.mainWindow?.ShowAwaitOverlay(false);
+                    var result = await App.ShowDialog(this.XamlRoot,
+                        "解压失败",
+                        ex.Message,
+                        "好",
+                        null,
+                        null,
+                        ContentDialogButton.Primary);
+                    return false;
+                }
+                finally
+                {
+                    MainWindow.mainWindow?.ShowAwaitOverlay(false);
+                }
+            }
+        }
+
+        private async void ConvertImageFormat(object sender, EventArgs e)
+        {
+            // 转换图片格式
+            bool result = await CheckAndInitFFMPEG();
+            if (!result)
+            {
+                return;
+            }
+            MainWindow.mainWindow?.ShowWindowOverlay(true, typeof(ConvertImagePage), "图片格式转换");
+        }
+
+        private async void ConvertMediaFormat(object sender, EventArgs e)
+        {
+            // 转换图片格式
+            bool result = await CheckAndInitFFMPEG();
+            if (!result)
+            {
+                return;
+            }
+            MainWindow.mainWindow?.ShowWindowOverlay(true, typeof(ConvertMediaPage), "媒体格式转换");
+        }
     }
+
 }
+

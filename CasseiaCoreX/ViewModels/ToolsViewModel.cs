@@ -18,6 +18,18 @@ namespace CasseiaCoreX.ViewModels
         public ICommand ImportDriversCommand;
         public event EventHandler ImportDriversEvent;
 
+        // 图片格式转换
+        public ICommand ConvertImageFormatCommand;
+        public event EventHandler ConvertImageFormatEvent;
+
+        // 媒体格式转换
+        public ICommand ConvertMediaFormatCommand;
+        public event EventHandler ConvertMediaFormatEvent;
+
+        // 补全 Codecs
+        public ICommand CompleteWICCodecsCommand;
+        public event EventHandler CompleteWICCodecsEvent;
+
         public ToolsViewModel()
         {
             BackupDriversCommand = new RelayCommand(() =>
@@ -27,6 +39,18 @@ namespace CasseiaCoreX.ViewModels
             ImportDriversCommand = new RelayCommand(() =>
             {
                 ImportDriversEvent?.Invoke(this, EventArgs.Empty);
+            });
+            ConvertImageFormatCommand = new RelayCommand(() =>
+            {
+                ConvertImageFormatEvent?.Invoke(this, EventArgs.Empty);
+            });
+            ConvertMediaFormatCommand = new RelayCommand(() =>
+            {
+                ConvertMediaFormatEvent?.Invoke(this, EventArgs.Empty);
+            });
+            CompleteWICCodecsCommand = new RelayCommand(() =>
+            {
+                CompleteWICCodecsEvent?.Invoke(this, EventArgs.Empty);
             });
         }
     }

@@ -109,7 +109,7 @@
                         </Grid>
                     </Button>
                     <!--显示 CasseiaCore 版本-->
-                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80">
+                    <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" MaxWidth="1000" Height="80" Click="CasseiaCoreVer_Click">
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60"/>

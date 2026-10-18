@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CasseiaCoreX.Views.Pages.ConvertMediaPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CasseiaCoreX.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <ScrollViewer AllowDrop="True" DragOver="ScrollViewer_DragOver" Drop="ScrollViewer_Drop">
+        <Grid>
+            <StackPanel Orientation="Vertical" Spacing="12" Margin="30" MaxWidth="500">
+                <Grid>
+                    <TextBox Text="{x:Bind ViewModel.SelFilesText, Mode=TwoWay}" TextWrapping="Wrap" Header="已选择的文件（一行一个）" Height="200"/>
+                    <Button Command="{x:Bind ViewModel.SelMediaCmd, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8E5;"/>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <!--ColumnDefinition Width="*"/-->
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,0,0" ItemsSource="{x:Bind ViewModel.FileTypeComboItems, Mode=TwoWay}" SelectedItem="{x:Bind ViewModel.SelEncodeType, Mode=TwoWay}" Header="选择目标文件类型" SelectedIndex="0"/>
+                    
+                </Grid>
+                <Grid>
+                    <TextBox Text="{x:Bind ViewModel.TargetFolder, Mode=TwoWay}" Header="选择保存的路径"/>
+                    <Button Command="{x:Bind ViewModel.SelFolderCmd, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" BorderBrush="Transparent">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8E5;"/>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

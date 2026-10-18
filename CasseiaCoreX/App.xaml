@@ -6,6 +6,17 @@
     xmlns:local="using:CasseiaCoreX">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="ThemeColor">#FFDADADA</Color>
+                    <SolidColorBrush x:Key="ThemeBrush" Color="#FFDADADA"/>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="ThemeColor">#FF0A0A0A</Color>
+                    <SolidColorBrush x:Key="ThemeBrush" Color="#FF0A0A0A"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
