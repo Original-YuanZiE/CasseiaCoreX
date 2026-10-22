@@ -23,7 +23,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox IsEditable="True" Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,10,0" ItemsSource="{x:Bind ViewModel.FileTypeComboItems, Mode=TwoWay}" SelectedItem="{x:Bind ViewModel.SelEncodeType, Mode=TwoWay}" Header="选择目标文件类型" SelectedIndex="0"/>
+                    <ComboBox IsEditable="False" Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,10,0" ItemsSource="{x:Bind ViewModel.FileTypeComboItems, Mode=TwoWay}" SelectedItem="{x:Bind ViewModel.SelEncodeType, Mode=TwoWay}" Header="选择目标文件类型" SelectedIndex="0"/>
                     <ComboBox IsEditable="False" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,0" SelectedIndex="{x:Bind ViewModel.SelQualityItemIndex, Mode=TwoWay}" Header="选择目标图像质量" IsEnabled="{x:Bind ViewModel.EnableQuality, Mode=OneWay}">
                         <x:String>高</x:String>
                         <x:String>中</x:String>

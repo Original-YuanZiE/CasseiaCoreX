@@ -20,6 +20,7 @@ namespace CasseiaCoreX.ViewModels
             "mpeg",
             "mp3",
             "m4a",
+            "m4a (alac)",
             "aac",
             "wav",
             "flac",

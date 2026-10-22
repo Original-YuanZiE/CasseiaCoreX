@@ -50,6 +50,7 @@ namespace CasseiaCoreX.Pages
             ViewModel.ConvertImageFormatEvent += ConvertImageFormat;
             ViewModel.ConvertMediaFormatEvent += ConvertMediaFormat;
             ViewModel.CompleteWICCodecsEvent += CompleteCodecs;
+            ViewModel.FFMPEGConsoleEvent += FFMPEGConsole;
         }
 
         private async Task CurrentPermission()
@@ -278,7 +279,7 @@ namespace CasseiaCoreX.Pages
             }
             else
             {
-                MainWindow.mainWindow?.ShowAwaitOverlay(true, "请等待 ffmpeg 初始化");
+                MainWindow.mainWindow?.ShowAwaitOverlay(true, "请等待 FFmpeg 初始化");
                 try
                 {
                     await manager.UnZipFFMPEG();
@@ -331,6 +332,33 @@ namespace CasseiaCoreX.Pages
                 return;
             }
             MainWindow.mainWindow?.ShowWindowOverlay(true, typeof(ConvertMediaPage), "媒体格式转换");
+        }
+
+        public async void FFMPEGConsole(object sender, EventArgs e)
+        {
+            // FFmpeg 控制台
+            bool result = await CheckAndInitFFMPEG();
+            if (!result)
+            {
+                return;
+            }
+            MainWindow.mainWindow?.ShowAwaitOverlay(true);
+            Models.ConvertFileModel.FFMPEGManager m = new();
+            ProcessStartInfo psi = new ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                Arguments = "/k",
+                WorkingDirectory = m.ffmpegDir,
+                WindowStyle = ProcessWindowStyle.Normal
+            };
+
+            Process p = new();
+            p.StartInfo = psi;
+            p.Start();
+
+            await p.WaitForExitAsync();
+
+            MainWindow.mainWindow?.ShowAwaitOverlay(false);
         }
     }
 

@@ -30,6 +30,10 @@ namespace CasseiaCoreX.ViewModels
         public ICommand CompleteWICCodecsCommand;
         public event EventHandler CompleteWICCodecsEvent;
 
+        // FFmpeg 控制台
+        public ICommand FFMPEGConsoleCommand;
+        public event EventHandler FFMPEGConsoleEvent;
+
         public ToolsViewModel()
         {
             BackupDriversCommand = new RelayCommand(() =>
@@ -51,6 +55,10 @@ namespace CasseiaCoreX.ViewModels
             CompleteWICCodecsCommand = new RelayCommand(() =>
             {
                 CompleteWICCodecsEvent?.Invoke(this, EventArgs.Empty);
+            });
+            FFMPEGConsoleCommand = new RelayCommand(() =>
+            {
+                FFMPEGConsoleEvent?.Invoke(this, EventArgs.Empty);
             });
         }
     }

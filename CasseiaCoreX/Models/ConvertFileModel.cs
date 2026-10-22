@@ -53,6 +53,7 @@ namespace CasseiaCoreX.Models
 
         public class FFMPEGManager
         {
+            public string ffmpegDir = Path.Combine(App.Root, "Assets", "ffmpeg", "bin");
             public string ffmpegPath = Path.Combine(App.Root, "Assets", "ffmpeg", "bin", "ffmpeg.exe");
             public string ffplayPath = Path.Combine(App.Root, "Assets", "ffmpeg", "bin", "ffplay.exe");
 
@@ -231,7 +232,7 @@ namespace CasseiaCoreX.Models
                     };
 
                     string outputPath = GenerateUniqueFileName(outputDirectory, outputFileName);
-                    await m.FFMPEGCommand("ffmpeg", $"-i \"{inputPath}\"{qualityArg}{extraArgs} -n \"{outputPath}\"");
+                    await m.FFMPEGCommand(m.ffmpegPath, $"-i \"{inputPath}\"{qualityArg}{extraArgs} -n \"{outputPath}\"");
                 }
                 finally
                 {
@@ -257,6 +258,7 @@ namespace CasseiaCoreX.Models
             {
                 ".mp3",
                 ".m4a",
+                ".m4a (alac)",
                 ".aac",
                 ".wav",
                 ".flac",
@@ -348,7 +350,12 @@ namespace CasseiaCoreX.Models
                     string extraArgs = "";
                     string extension = Path.GetExtension(outputFileName).ToLowerInvariant();
 
-                    if (AudioOutputExtensions.Contains(extension))
+                    if (outputFileName.EndsWith(".m4a (alac)", StringComparison.OrdinalIgnoreCase))
+                    {
+                        extraArgs = " -map 0:a:0 -map 0:v? -c:a alac -c:v copy -map_metadata 0 -disposition:v:0 attached_pic";
+                        outputFileName = outputFileName.Replace(".m4a (alac)", ".m4a");
+                    }
+                    else if (AudioOutputExtensions.Contains(extension))
                     {
                         extraArgs = " -vn";
                     }
@@ -362,7 +369,7 @@ namespace CasseiaCoreX.Models
 
                     string outputPath = GenerateUniqueFileName(outputDirectory, outputFileName);
 
-                    await m.FFMPEGCommand("ffmpeg", $"-i \"{inputPath}\"{extraArgs} -n \"{outputPath}\"");
+                    await m.FFMPEGCommand(m.ffmpegPath, $"-i \"{inputPath}\"{extraArgs} -n \"{outputPath}\"");
                 }
                 finally
                 {
@@ -775,7 +782,7 @@ namespace CasseiaCoreX.Models
                         Console.WriteLine(e);
                     };
 
-                    await manager.FFMPEGCommand("ffmpeg", $"-i \"{tempAudioPath}\"{coverArgs}{metadataArgs} -n \"{outputPath}\"");
+                    await manager.FFMPEGCommand(manager.ffmpegPath, $"-i \"{tempAudioPath}\"{coverArgs}{metadataArgs} -n \"{outputPath}\"");
 
                     return outputPath;
                 }

@@ -26,6 +26,18 @@
 
             <!--导航视图-->
             <NavigationView x:Name="MainNavView" Grid.Row="1" IsSettingsVisible="False" ItemInvoked="MainNavView_ItemInvoked">
+                <NavigationView.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="#09FFFFFF" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="#42FFFFFF" />
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </NavigationView.Resources>
                 <NavigationView.MenuItems>
                     <NavigationViewItem x:Name="NavigateHome" Content="主页" Icon="Home"/>
                     <NavigationViewItem x:Name="NavigateSysSettings" Content="系统设置" Icon="Setting"/>
